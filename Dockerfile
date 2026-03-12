@@ -18,7 +18,7 @@ HEALTHCHECK CMD step ca health 2>/dev/null | grep "^ok" >/dev/null
 
 COPY entrypoint.sh /entrypoint.sh
 
-EXPOSE 9000/TCP
+EXPOSE 9000/tcp
 
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
-CMD exec /usr/bin/step-ca --password-file $PWDPATH $CONFIGPATH
+CMD ["exec","/usr/bin/step-ca","--password-file","$PWDPATH","$CONFIGPATH"]
