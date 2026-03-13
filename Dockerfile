@@ -21,4 +21,4 @@ COPY entrypoint.sh /entrypoint.sh
 EXPOSE 9000/tcp
 
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
-CMD ["exec","/usr/bin/step-ca","--password-file","$PWDPATH","$CONFIGPATH"]
+CMD ["/usr/bin/step-ca","--password-file","$PWDPATH","$CONFIGPATH"]
