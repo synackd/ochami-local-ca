@@ -51,11 +51,18 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v7
         with:
-          platforms: linux/amd64,linux/arm64
+          platforms: |
+            linux/amd64
+            linux/arm64/v8
           context: .
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Inspect published manifest
+        if: ${{ github.event_name != 'pull_request' }}
+        run: |
+          docker buildx imagetools inspect ghcr.io/openchami/local-ca:${{ github.ref_name }}
 
   build-acmesh:
     runs-on: ubuntu-latest
@@ -96,9 +103,16 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v7
         with:
-          platforms: linux/amd64,linux/arm64
+          platforms: |
+            linux/amd64
+            linux/arm64/v8
           context: .
           file: Dockerfile.acme
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Inspect published manifest
+        if: ${{ github.event_name != 'pull_request' }}
+        run: |
+          docker buildx imagetools inspect ghcr.io/openchami/acme.sh:${{ github.ref_name }}
