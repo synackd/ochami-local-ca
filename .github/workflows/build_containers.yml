@@ -59,6 +59,11 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+      - name: Inspect published manifest
+        if: ${{ github.event_name != 'pull_request' }}
+        run: |
+          docker buildx imagetools inspect ghcr.io/openchami/local-ca:${{ github.ref_name }}
+
   build-acmesh:
     runs-on: ubuntu-latest
     steps:
@@ -106,3 +111,8 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Inspect published manifest
+        if: ${{ github.event_name != 'pull_request' }}
+        run: |
+          docker buildx imagetools inspect ghcr.io/openchami/acme.sh:${{ github.ref_name }}
