@@ -17,8 +17,9 @@ STOPSIGNAL SIGTERM
 HEALTHCHECK CMD step ca health 2>/dev/null | grep "^ok" >/dev/null
 
 COPY entrypoint.sh /entrypoint.sh
+COPY step-ca.sh /step-ca.sh
 
 EXPOSE 9000/tcp
 
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
-CMD ["/usr/bin/step-ca","--password-file","$PWDPATH","$CONFIGPATH"]
+CMD ["/step-ca.sh"]
